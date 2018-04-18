@@ -37,7 +37,10 @@
             <p:commandButton value="Registrar" actionListener="#{estudiantesBeen.registrarEstu()}" />
             <p:commandButton value="Listar" actionListener="#{estudiantesBeen.listarEstu()}" update="Estudiante"/>
 
-            <p:dataTable id="Estudiante" value="#{estudiantesBeen.listarEstudiante}" var="Estudiantes">
+            <p:dataTable id="Estudiante" value="#{estudiantesBeen.listarEstudiante}" var="Estudiantes"
+                         paginator="true" rows="20"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
                 <p:column headerText="Nombre">
                     <p:outputLabel value="#{Estudiantes.nombre}"/>
                 </p:column>
