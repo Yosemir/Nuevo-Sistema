@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <center>SISTEMA DE REGISTRO DE NOTAS Y ASISTENCIAS</center>
+        <center>"DATOS DEL PROFESOR "</center>
+        <p:growl id="msj" autoUpdate="true"/>
+        <h:form id="PrimeroProf">
+            <p:panelGrid columns="2">
+                <p:outputLabel for="txtNombre" value="Nombre" />
+                <p:inputText id="txtNombre" value="#{profesoresB.profesores.nomProf}" required="true" />
+                <p:outputLabel for="txtApellido" value="Apellido" />
+                <p:inputText id="txtApellido" value="#{profesoresB.profesores.apeProf}" required="true" />
+                <p:outputLabel for="txtDNI" value="DNI" />
+                <p:inputText id="txtDNI" value="#{profesoresB.profesores.dniProf}" required="true" />
+                <p:outputLabel for="txtDireccion" value="Direccion" />
+                <p:inputText id="txtDireccion" value="#{profesoresB.profesores.direcProf}" required="true" />
+                <p:outputLabel for="txtCelular" value="Celular" />
+                <p:inputText id="txtCelular" value="#{profesoresB.profesores.celProf}" required="true" />
+                <p:outputLabel  value="Sexo" />
+                <p:selectOneMenu value="#{profesoresB.profesores.sexoProf}">
+                    <f:selectItem itemLabel="MASCULINO" itemValue="M"/>
+                    <f:selectItem itemLabel="FEMENINO" itemValue="F"/>
+                </p:selectOneMenu>
+
+                <p:outputLabel for="txtCorreo" value="Correo" />
+                <p:inputText id="txtCorreo" value="#{profesoresB.profesores.correoProf}" required="true" />
+                <p:outputLabel for="txtFecIngre" value="Fecha de ingreso" />
+                <p:inputText id="txtFecIngre" value="#{profesoresB.profesores.fecDeIngre}" required="true" />
+            </p:panelGrid>
+            <p:commandButton value="Registrar" actionListener="#{profesoresB.registrarProf()}" />
+            <p:commandButton value="Modificar" actionListener="#{profesoresB.listarProf()}" update="profesores"/>
+
+            <p:dataTable id="profesores" value="#{profesoresB.lstProfesores}" var="profesor">
+                <p:column headerText="Nombre">
+                    <p:outputLabel value="#{profesor.nomProf}"/>
+                </p:column>
+                <p:column headerText="Apellido">
+                    <p:outputLabel value="#{profesor.apeProf}"/>
+                </p:column>
+                <p:column headerText="DNI">
+                    <p:outputLabel value="#{profesor.dniProf}"/>
+                </p:column>
+                <p:column headerText="Direccion">
+                    <p:outputLabel value="#{profesor.direcProf}"/>
+                </p:column>
+                <p:column headerText="Celular">
+                    <p:outputLabel value="#{profesor.celProf}"/>
+                </p:column>
+                <p:column headerText="Sexo">
+                    <p:outputLabel value="#{profesor.sexoProf}"/>
+                </p:column>
+
+                <p:column headerText="Correo">
+                    <p:outputLabel value="#{profesor.correoProf}"/>
+                </p:column>
+
+                <p:column headerText="Fecha de ingreso">
+                    <p:outputLabel value="#{profesor.fecDeIngre}"/>
+                </p:column>
+                <p:column headerText="Modificar">
+                    <p:commandLink value="Modificar" actionListener="#{profesoresB.jalarDataProfesor(profesor.idProf)}" oncomplete="PF('widProfesores').show();" update=":imgProfesores"/>
+                </p:column>
+                <p:column headerText="Eliminar">
+                    <p:commandLink value="Eliminar" actionListener="#{profesoresB.EliminarProfesor(profesor)}"  update=":imgProfesores"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        <p:dialog header="Editar Datos" widgetVar="widProfesores" id="imgProfesores">
+            <h:form>
+                <p:outputLabel value="Nombre" />
+                <p:inputText value="#{profesoresB.profesores.nomProf}" />
+                <p:outputLabel  value="Apellido" />
+                <p:inputText value="#{profesoresB.profesores.apeProf}"  />
+                <p:outputLabel  value="DNI" />
+                <p:inputText value="#{profesoresB.profesores.dniProf}"  maxlength="8"/>
+                <p:outputLabel  value="Direccion" />
+                <p:inputText  value="#{profesoresB.profesores.direcProf}" />
+                <p:outputLabel  value="Correo" />
+                <p:inputText value="#{profesoresB.profesores.correoProf}"  />
+                <p:outputLabel  value="Fecha de nacimiento" />
+                <p:inputText  value="#{profesoresB.profesores.fecNacProf}" />
+                <p:outputLabel  value="Sexo" />
+                <p:selectOneMenu value="#{profesoresB.profesores.sexoProf}">
+                    <f:selectItem itemLabel="MASCULINO" itemValue="M"/>
+                    <f:selectItem itemLabel="FEMENINO" itemValue="F"/>
+                </p:selectOneMenu>
+                <p:outputLabel  value="Celular" />
+                <p:inputText value="#{profesoresB.profesores.sexoProf}" maxlength="9" />
+
+                <p:commandButton value="ACEPTAR" actionListener="#{profesoresB.registrarProf()}" oncomplete="PF('widProfesores').hide();" update=":PrimeroProf:Profesores"/>
+                <p:commandButton value="CANCELAR" immediate="true"/>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>
+

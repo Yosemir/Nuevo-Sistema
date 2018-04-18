@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <center>  SISTEMA DE REGISTRO DE NOTAS Y ASISTENCIAS  </center>
+        <center> "DATOS DEL ESTUDIANTE" </center>
+        <p:growl id="msj" autoUpdate="true"/>
+        <h:form id="Primero">
+            <p:panelGrid columns="2">
+                <p:outputLabel for="txtNombre" value="Nombre" />
+                <p:inputText id="txtNombre" value="#{estudiantesBeen.estudiante.nombre}" />
+                <p:outputLabel for="txtApellido" value="Apellido" />
+                <p:inputText id="txtApellido" value="#{estudiantesBeen.estudiante.apellido}" />
+                <p:outputLabel for="txtDNI" value="DNI" />
+                <p:inputText id="txtDNI" value="#{estudiantesBeen.estudiante.DNI}" maxlength="8"/>
+                <p:outputLabel for="txtDireccion" value="Direccion" />
+                <p:inputText id="txtDireccion" value="#{estudiantesBeen.estudiante.direccion}"/>
+                <p:outputLabel for="txtCorreo" value="Correo" />
+                <p:inputText id="txtCorreo" value="#{estudiantesBeen.estudiante.correo}" />
+                <p:outputLabel for="txtFecNan" value="Fecha de nacimiento" />
+                <p:inputMask mask="99/99/9999" id="txtFecNan" value="#{estudiantesBeen.estudiante.fecNacEstu}" />
+                <p:outputLabel  value="Sexo" />
+                <p:selectOneMenu value="#{estudiantesBeen.estudiante.sexo}">
+                    <f:selectItem itemLabel="MASCULINO" itemValue="M"/>
+                    <f:selectItem itemLabel="FEMENINO" itemValue="F"/>
+                </p:selectOneMenu>
+                <p:outputLabel for="txtCelular" value="Celular" />
+                <p:inputText id="txtCelular" value="#{estudiantesBeen.estudiante.celular}" maxlength="9"/>
+            </p:panelGrid>
+            <p:commandButton value="Registrar" actionListener="#{estudiantesBeen.registrarEstu()}" />
+            <p:commandButton value="Listar" actionListener="#{estudiantesBeen.listarEstu()}" update="Estudiante"/>
+
+            <p:dataTable id="Estudiante" value="#{estudiantesBeen.listarEstudiante}" var="Estudiantes">
+                <p:column headerText="Nombre">
+                    <p:outputLabel value="#{Estudiantes.nombre}"/>
+                </p:column>
+                <p:column headerText="Apellido">
+                    <p:outputLabel value="#{Estudiantes.apellido}"/>
+                </p:column>
+                <p:column headerText="DNI">
+                    <p:outputLabel value="#{Estudiantes.DNI}"/>
+                </p:column>
+                <p:column headerText="Direccion">
+                    <p:outputLabel value="#{Estudiantes.direccion}"/>
+                </p:column>
+                <p:column headerText="Correo">
+                    <p:outputLabel value="#{Estudiantes.correo}"/>
+                </p:column>
+                <p:column headerText="Fecha de Naciemiento">
+                    <p:outputLabel value="#{Estudiantes.fecNacEstu}"/>
+                </p:column>
+                <p:column headerText="Sexo">
+                    <p:outputLabel value="#{Estudiantes.sexo}">
+                        <f:converter converterId="SexoConverter"/>
+                    </p:outputLabel>
+                </p:column>
+                <p:column headerText="Celular">
+                    <p:outputLabel value="#{Estudiantes.celular}"/>
+                </p:column>
+                <p:column headerText="Modificar">
+                    <p:commandLink value="Modificar" actionListener="#{estudiantesBeen.jalarDataAlumno(Estudiantes.idEstu)}" oncomplete="PF('wigDATOS').show();" update=":imgdatos"/>
+                </p:column>
+                <p:column headerText="Eliminar">
+                    <p:commandLink value="Eliminar" actionListener="#{estudiantesBeen.EliminarEstu(Estudiantes)}"  update=":imgdatos"/>
+                </p:column>
+            </p:dataTable>
+        </h:form>
+
+        
+        
+        
+        
+        <!--Editar Registro-->
+        <p:dialog header="Modificar" widgetVar="wigDATOS" id="imgdatos">
+            <h:form>
+                <p:outputLabel value="Nombre" />
+                <p:inputText value="#{estudiantesBeen.select.nombre}" />
+                <p:outputLabel  value="Apellido" />
+                <p:inputText value="#{estudiantesBeen.select.apellido}"  />
+                <p:outputLabel  value="DNI" />
+                <p:inputText value="#{estudiantesBeen.select.DNI}"  maxlength="8"/>
+                <p:outputLabel  value="Direccion" />
+                <p:inputText  value="#{estudiantesBeen.select.direccion}" />
+                <p:outputLabel  value="Correo" />
+                <p:inputText value="#{estudiantesBeen.select.correo}"  />
+                <p:outputLabel  value="Fecha de nacimiento" />
+                <p:inputText  value="#{estudiantesBeen.select.fecNacEstu}" />
+                <p:outputLabel  value="Sexo" />
+                <p:selectOneMenu value="#{estudiantesBeen.select.sexo}">
+                    <f:selectItem itemLabel="MASCULINO" itemValue="M"/>
+                    <f:selectItem itemLabel="FEMENINO" itemValue="F"/>
+                </p:selectOneMenu>
+                <p:outputLabel  value="Celular" />
+                <p:inputText value="#{estudiantesBeen.select.celular}" maxlength="9" />
+
+                <p:commandButton value="ACEPTAR" actionListener="#{estudiantesBeen.modificarEstu()}" oncomplete="PF('wigDATOS').hide();" update=":Primero:Estudiante"/>
+                <p:commandButton value="CANCELAR" immediate="true"/>
+            </h:form>
+        </p:dialog>
+        <!--Fin-->
+    </h:body>
+</html>
+

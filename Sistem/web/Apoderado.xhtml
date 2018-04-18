@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <center>  SISTEMA DE REGISTRO DE NOTAS Y ASISTENCIAS  </center>
+        <center> "DATOS DEL USUARIO" </center>
+        <p:growl id="msj" autoUpdate="true"/>
+        <h:form id="SegundoA">
+
+            <p:panelGrid columns="2">
+                <p:outputLabel for="txtNombre" value="Nombre" />
+                <p:inputText id="txtNombre" value="#{apoderadoB.apoderado.nomApo}" required="true" />
+                <p:outputLabel for="txtApellido" value="Apellido" />
+                <p:inputText id="txtApellido" value="#{apoderadoB.apoderado.apeApo}" required="true" />
+                <p:outputLabel for="txtDNI" value="DNI" />
+                <p:inputText id="txtDNI" value="#{apoderadoB.apoderado.dniApo}" required="true" />
+                <p:outputLabel for="txtDireccion" value="Direccion" />
+                <p:inputText id="txtDireccion" value="#{apoderadoB.apoderado.direcApo}" required="true" />
+                <p:outputLabel for="txtCelular" value="Celular" />
+                <p:inputText id="txtCelular" value="#{apoderadoB.apoderado.celApo}" required="true" />
+                <p:outputLabel  value="Sexo" />
+                <p:selectOneMenu value="#{apoderadoB.apoderado.sexApo}" >
+                    <f:selectItem itemLabel="MASCULINO" itemValue="M"/>
+                    <f:selectItem itemLabel="FEMENINO" itemValue="F"/>
+                </p:selectOneMenu>
+                <p:outputLabel for="txtParentesco" value="Parentesco" />
+                <p:inputText id="txtParentesco" value="#{apoderadoB.apoderado.parenApo}" required="true" />
+            </p:panelGrid>
+            <p:commandButton value="Registrar" actionListener="#{apoderadoB.registrarApo()}" />
+            <p:commandButton value="Listar" actionListener="#{apoderadoB.listaApo()}" update="Apoderado"/>
+
+
+            <p:dataTable id="Apoderado" value="#{apoderadoB.lstApoderado}" var="Apoderados">
+                <p:column headerText="Nombre">
+                    <p:outputLabel value="#{Apoderados.nomApo}"/>
+                </p:column>
+                <p:column headerText="Apellido">
+                    <p:outputLabel value="#{Apoderados.apeApo}"/>
+                </p:column>
+                <p:column headerText="DNI">
+                    <p:outputLabel value="#{Apoderados.dniApo}"/>
+                </p:column>
+                <p:column headerText="Direccion">
+                    <p:outputLabel value="#{Apoderados.direcApo}"/>
+                </p:column>
+                <p:column headerText="Correo">
+                    <p:outputLabel value="#{Apoderados.correoApo}"/>
+                </p:column>
+                <p:column headerText="Fecha de Naciemiento">
+                    <p:outputLabel value="#{Apoderados.fecNacApo}"/>
+                </p:column>
+                <p:column headerText="Sexo">
+                    <p:outputLabel value="#{Apoderados.sexApo}">
+                        <f:converter converterId="SexoConverter"/>
+                    </p:outputLabel>
+                </p:column>
+                <p:column headerText="Celular">
+                    <p:outputLabel value="#{Apoderados.celApo}"/>
+                </p:column>
+                <p:column headerText="Modificar">
+                    <p:commandLink value="Modificar" actionListener="#{apoderadoB.jalarDataApoderado(Apoderados.idApo)}" oncomplete="PF('wigApoderado').show();" update=":imgApoderado"/>
+                </p:column>
+                <p:column headerText="Eliminar">
+                    <p:commandLink value="Eliminar" actionListener="#{apoderadoB.EliminarApo(Apoderados)}"  update=":imgApoderado"/>
+                </p:column>
+            </p:dataTable> 
+        </h:form>
+        <p:dialog header="Modificar" widgetVar="wigApoderado" id="imgApoderado">
+            <h:form>
+                <p:outputLabel value="Nombre" />
+                <p:inputText value="#{apoderadoB.select2.nomApo}" />
+                <p:outputLabel  value="Apellido" />
+                <p:inputText value="#{apoderadoB.select2.apeApo}"  />
+                <p:outputLabel  value="DNI" />
+                <p:inputText value="#{apoderadoB.select2.dniApo}"  maxlength="8"/>
+                <p:outputLabel  value="Direccion" />
+                <p:inputText  value="#{apoderadoB.select2.direcApo}" />
+                <p:outputLabel  value="Correo" />
+                <p:inputText value="#{apoderadoB.select2.correoApo}"  />
+                <p:outputLabel  value="Fecha de nacimiento" />
+                <p:inputText  value="#{apoderadoB.select2.fecNacApo}" />
+                <p:outputLabel  value="Sexo" />
+                <p:selectOneMenu value="#{apoderadoB.select2.sexApo}">
+                    <f:selectItem itemLabel="MASCULINO" itemValue="M"/>
+                    <f:selectItem itemLabel="FEMENINO" itemValue="F"/>
+                </p:selectOneMenu>
+                <p:outputLabel  value="Celular" />
+                <p:inputText value="#{apoderadoB.select2.celApo}" maxlength="9" />
+
+                <p:commandButton value="ACEPTAR" actionListener="#{apoderadoB.registrarApo()}" oncomplete="PF('wigApoderado').hide();" update=":SegundoA:Apoderado"/>
+                <p:commandButton value="CANCELAR" immediate="true"/>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>
